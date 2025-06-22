@@ -6,7 +6,7 @@ on:
 
 permissions:
   contents: write      # needed for creating releases and uploading assets
-  id-token: write      # optional, if you later add OIDC-based AWS deploy
+  id-token: write      # optional, if you later add OIDC-based AWS deploy2
 
 jobs:
 # ------------------------------- LINT ---------------------------------
