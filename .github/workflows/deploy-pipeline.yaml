@@ -5,7 +5,7 @@ on:
     branches: [main]
 
 permissions:
-  contents: write      # needed for creating releases and uploading assets
+  contents: write      # needed for creating releases and uploading assets2
   id-token: write      # optional, if you later add OIDC-based AWS deploy2
 
 jobs:
