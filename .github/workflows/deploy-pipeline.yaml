@@ -2,11 +2,11 @@ name: Deploy Lambda Function
 
 on:
   push:
-    branches: [lab]
+    branches: [lab]  # make sure this matches your active branch
 
 permissions:
-  contents: write      # needed for creating releases and uploading assets2
-  id-token: write      # optional, if you later add OIDC-based AWS deploy2
+  contents: write      # needed for creating releases and uploading assets
+  id-token: write      # optional for future OIDC integrations (e.g., AWS deploy)
 
 jobs:
 # ------------------------------- LINT ---------------------------------
@@ -64,8 +64,6 @@ jobs:
   publish:
     needs: build
     runs-on: ubuntu-latest
-    permissions:
-      contents: write   # required by the release action
     steps:
       - name: Download build artifact
         uses: actions/download-artifact@v4
@@ -73,16 +71,12 @@ jobs:
           name: lambda-bundle
           path: .
 
-      # lightweight, modern release action that is already env-file compatible
-      - name: Create GitHub Release
-        id: release
+      - name: Create GitHub Release + upload asset
         uses: softprops/action-gh-release@v2
         with:
           tag_name: ${{ github.run_number }}
           name: Release ${{ github.run_number }}
           body: Release for commit ${{ github.sha }}
-
-      - name: Upload asset to release
-        run: gh release upload ${{ steps.release.outputs.tag_name }} lambda_bundle_${{ github.sha }}.zip --clobber
+          files: lambda_bundle_${{ github.sha }}.zip
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
