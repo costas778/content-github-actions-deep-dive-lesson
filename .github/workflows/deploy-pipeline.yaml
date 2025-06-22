@@ -2,7 +2,7 @@ name: Deploy Lambda Function
 
 on:
   push:
-    branches: [main]
+    branches: [lab]
 
 permissions:
   contents: write      # needed for creating releases and uploading assets2
